@@ -1,37 +1,37 @@
 const Sequelize = require('sequelize');
 const db = require('../repositories/db.js');
+const Autores = require('./autor.model.js');
 
-const Clientes = db.define(
-  'clientes',
+const Livros = db.define(
+  'livros',
   {
-    clienteId: {
+    livroId: {
       type: Sequelize.INTEGER,
-      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     nome: {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    email: {
-      type: Sequelize.STRING,
+    valor: {
+      type: Sequelize.DECIMAL,
       allowNull: false,
     },
-    senha: {
-      type: Sequelize.STRING,
+    estoque: {
+      type: Sequelize.INTEGER,
       allowNull: false,
     },
-    telefone: {
-      type: Sequelize.STRING,
+    autorId: {
+      type: Sequelize.INTEGER,
       allowNull: false,
-    },
-    endereco: {
-      type: Sequelize.STRING,
-      allowNull: false,
+      foreignKey: true,
     },
   },
   { underscored: true }
 );
 
-module.exports = Clientes;
+Livros.belongsTo(Autores, { foreignKey: 'autorId' });
+
+module.exports = Livros;

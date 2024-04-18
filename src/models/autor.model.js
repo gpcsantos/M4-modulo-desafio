@@ -1,14 +1,14 @@
 const Sequelize = require('sequelize');
 const db = require('../repositories/db.js');
 
-const Clientes = db.define(
-  'clientes',
+const Autores = db.define(
+  'autores',
   {
-    clienteId: {
+    autorId: {
       type: Sequelize.INTEGER,
-      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     nome: {
       type: Sequelize.STRING,
@@ -18,15 +18,7 @@ const Clientes = db.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
-    senha: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
     telefone: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    endereco: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -34,4 +26,4 @@ const Clientes = db.define(
   { underscored: true }
 );
 
-module.exports = Clientes;
+module.exports = Autores;
