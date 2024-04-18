@@ -1,4 +1,4 @@
-# Módulo Desafio - Desenvvolvedor NODE.js
+# Módulo Desafio - Desenvolvedor NODE.js
 
 ## Desafio Final
 
@@ -10,7 +10,7 @@ A API deverá gerenciar os cadastros de livros, autores, clientes e vendas. Tamb
 - Node.js
 - Express
 - Sequelize
-- Banco de dados SQL - Postgres
+- Banco de dados SQL - MySQL
 - Banco de Dados NoSQL - MongoDB
 - Jest e Supertest (testes unitários e de integração)
 
