@@ -15,31 +15,31 @@ async function getLivro(id) {
   }
 }
 
-async function createLivro(livro) {
+async function createLivro(venda) {
   try {
-    return await livros.create(livro);
+    return await livros.create(venda);
   } catch (error) {
     throw error;
   }
 }
 
-async function updateLivro(livro) {
+async function updateLivro(venda) {
   try {
-    await livros.update(livro, {
+    await livros.update(venda, {
       where: {
-        livroId: livro.livroId,
+        vendaId: venda.vendaId,
       },
     });
   } catch (error) {
     throw error;
   }
-  return await getLivro(livro.livroId);
+  return await getLivro(venda.vendaId);
 }
 
 async function deleteLivro(id) {
   try {
     await livros.destroy({
-      where: { livroId: id },
+      where: { vendaId: id },
     });
   } catch (error) {
     throw error;
