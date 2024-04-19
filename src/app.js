@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const clienteRouter = require('./routers/cliente.router.js');
 const vendaRouter = require('./routers/venda.router.js');
+const livroRouter = require('./routers/livro.router.js');
 
 // teste de resposta do banco
 const Vendas = require('./models/venda.model');
@@ -20,5 +21,6 @@ app.get('/', async (req, res) => {
 
 app.use('/clientes', clienteRouter);
 app.use('/vendas', vendaRouter);
+app.use('/livros', livroRouter);
 
 module.exports = app;

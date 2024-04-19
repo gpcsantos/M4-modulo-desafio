@@ -10,7 +10,7 @@ function venda(menthod) {
         body('valor', 'Valor é obrigatório')
           .exists()
           .notEmpty()
-          .isString()
+          .isDecimal()
           .trim(),
         body('data', 'Data é obrigatório').exists().notEmpty(),
         body('data', 'Data no formatdo inválido').isISO8601().toDate(),
@@ -26,11 +26,11 @@ function venda(menthod) {
     }
     case 'update': {
       return [
-        body('vendaId', 'ID é obrigatório').exists().notEmpty().isInt(),
+        body('vendaId', 'ID é obrigatório').exists().notEmpty().trim().isInt(),
         body('valor', 'Valor é obrigatório')
           .exists()
           .notEmpty()
-          .isString()
+          .isDecimal()
           .trim(),
         body('data', 'Data é obrigatório').exists().notEmpty(),
         body('data', 'Data no formatdo inválido').isISO8601().toDate(),

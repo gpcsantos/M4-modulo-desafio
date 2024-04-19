@@ -9,6 +9,7 @@ async function getVenda(id) {
 }
 
 async function createVenda(venda) {
+  // TODO: se o livro tem estoque maior que zero. Diminuir o estoque em uma unidade. Não tenha, retornar Erro
   return await vendaRepository.createVenda(venda);
 }
 

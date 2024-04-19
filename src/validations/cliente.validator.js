@@ -36,7 +36,11 @@ function cliente(menthod) {
     }
     case 'update': {
       return [
-        body('clienteId', 'ID é obrigatório').exists().notEmpty().isInt(),
+        body('clienteId', 'ID é obrigatório')
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
         body('nome', 'Nome é obrigatório')
           .exists()
           .notEmpty()
