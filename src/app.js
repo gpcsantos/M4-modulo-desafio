@@ -3,20 +3,22 @@ const app = express();
 const cors = require('cors');
 
 const clienteRouter = require('./routers/cliente.router.js');
+const vendaRouter = require('./routers/venda.router.js');
 
 // teste de resposta do banco
-const Clientes = require('./models/cliente.model');
-const getClientes = async () => {
-  return await Clientes.findAll();
+const Vendas = require('./models/venda.model');
+const getVendas = async () => {
+  return await Vendas.findAll();
 };
 app.use(express.json());
 app.use(cors());
 
 app.get('/', async (req, res) => {
-  res.send(await getClientes());
+  res.send(await getVendas());
 });
 // TODO : RETIRAR o teste
 
 app.use('/clientes', clienteRouter);
+app.use('/vendas', vendaRouter);
 
 module.exports = app;

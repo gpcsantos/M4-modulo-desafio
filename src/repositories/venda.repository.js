@@ -1,49 +1,45 @@
-const clientes = require('../models/cliente.model');
+const vendas = require('../models/venda.model');
 
-async function getClientes() {
+async function getVendas() {
   try {
-    return await clientes.findAll({
-      attributes: { exclude: ['senha'] },
-    });
+    return await vendas.findAll();
   } catch (error) {
     throw error;
   }
 }
-async function getCliente(id) {
+async function getVenda(id) {
   try {
-    return await clientes.findByPk(id, {
-      attributes: { exclude: ['senha'] },
-    });
-  } catch (error) {
-    throw error;
-  }
-}
-
-async function createCliente(cliente) {
-  try {
-    return await clientes.create(cliente);
+    return await vendas.findByPk(id);
   } catch (error) {
     throw error;
   }
 }
 
-async function updateCliente(cliente) {
+async function createVenda(venda) {
   try {
-    await clientes.update(cliente, {
+    return await vendas.create(venda);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function updateVenda(venda) {
+  try {
+    await vendas.update(venda, {
       where: {
-        clienteId: cliente.clienteId,
+        vendaId: venda.vendaId,
       },
     });
   } catch (error) {
     throw error;
   }
-  return await getCliente(cliente.clienteId);
+  return await getVenda(venda.vendaId);
 }
 
-async function deleteCliente(id) {
+async function deleteVenda(id) {
   try {
-    await clientes.destroy({
-      where: { clienteId: id },
+    await vendas.destroy({
+      where: { vendaId: id },
     });
   } catch (error) {
     throw error;
@@ -51,9 +47,9 @@ async function deleteCliente(id) {
 }
 
 module.exports = {
-  getClientes,
-  getCliente,
-  createCliente,
-  updateCliente,
-  deleteCliente,
+  getVendas,
+  getVenda,
+  createVenda,
+  updateVenda,
+  deleteVenda,
 };
