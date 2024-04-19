@@ -15,31 +15,32 @@ async function getLivro(id) {
   }
 }
 
-async function createLivro(venda) {
+async function createLivro(livro) {
   try {
-    return await livros.create(venda);
+    return await livros.create(livro);
   } catch (error) {
     throw error;
   }
 }
 
-async function updateLivro(venda) {
+async function updateLivro(livro) {
+  //TODO: O endpoint não deve permitir que o nome e autor do livro sejam alterados, evitando assim possíveis inconsistências
   try {
-    await livros.update(venda, {
+    await livros.update(livro, {
       where: {
-        vendaId: venda.vendaId,
+        livroId: livro.livroId,
       },
     });
   } catch (error) {
     throw error;
   }
-  return await getLivro(venda.vendaId);
+  return await getLivro(livro.livroId);
 }
 
 async function deleteLivro(id) {
   try {
     await livros.destroy({
-      where: { vendaId: id },
+      where: { livroId: id },
     });
   } catch (error) {
     throw error;
