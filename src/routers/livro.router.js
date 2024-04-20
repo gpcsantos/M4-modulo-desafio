@@ -7,12 +7,32 @@ const router = express.Router();
 router.get('/', livroValidator.livro('get'), livroController.getLivros);
 router.get('/:id', livroValidator.livro('id'), livroController.getLivro);
 router.post('/', livroValidator.livro('create'), livroController.createLivro);
-router.post('/info', livroController.createLivroInfo); // TODO: fazer validations
-router.post('/:livroId/avaliacao', livroController.createAvaliacao); // TODO: fazer validations
+router.post(
+  '/info',
+  livroValidator.livro('createUpdateInfo'),
+  livroController.createLivroInfo
+);
+router.post(
+  '/:livroId/avaliacao',
+  livroValidator.livro('createAvaliacao'),
+  livroController.createAvaliacao
+);
 router.put('/', livroValidator.livro('update'), livroController.updateLivro);
-router.put('/info', livroController.updateLivroInfo); // TODO: fazer validations
+router.put(
+  '/info',
+  livroValidator.livro('createUpdateInfo'),
+  livroController.updateLivroInfo
+);
 router.delete('/:id', livroValidator.livro('id'), livroController.deleteLivro);
-router.delete('/info/:livroId', livroController.deleteLivroInfo); // TODO: fazer validations
-router.delete('/:livroId/avaliacao/:index', livroController.deleteAvaliacao); // TODO: fazer validations
+router.delete(
+  '/info/:livroId',
+  livroValidator.livro('deleteInfo'),
+  livroController.deleteLivroInfo
+);
+router.delete(
+  '/:livroId/avaliacao/:index',
+  livroValidator.livro('deleteAvaliacao'),
+  livroController.deleteAvaliacao
+);
 
 module.exports = router;

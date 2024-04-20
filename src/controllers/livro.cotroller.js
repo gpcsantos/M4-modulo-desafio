@@ -48,6 +48,10 @@ async function createLivro(req, res, next) {
 }
 
 async function createLivroInfo(req, res, next) {
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    return res.status(400).json({ erro: erros.mapped() });
+  }
   try {
     let livroInfo = req.body;
 
@@ -64,6 +68,10 @@ async function createLivroInfo(req, res, next) {
 }
 
 async function createAvaliacao(req, res, next) {
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    return res.status(400).json({ erro: erros.mapped() });
+  }
   try {
     const livroId = req.params.livroId;
     const avaliacao = req.body;
@@ -95,6 +103,10 @@ async function updateLivro(req, res, next) {
 }
 
 async function updateLivroInfo(req, res, next) {
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    return res.status(400).json({ erro: erros.mapped() });
+  }
   try {
     let livroInfo = {
       livroId: req.body.livroId,
@@ -128,6 +140,10 @@ async function deleteLivro(req, res, next) {
 }
 
 async function deleteLivroInfo(req, res, next) {
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    return res.status(400).json({ erro: erros.array() });
+  }
   try {
     let livroId = req.params.livroId;
 
@@ -143,6 +159,10 @@ async function deleteLivroInfo(req, res, next) {
 }
 
 async function deleteAvaliacao(req, res, next) {
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    return res.status(400).json({ erro: erros.array() });
+  }
   try {
     let livroId = req.params.livroId;
     let index = req.params.index;

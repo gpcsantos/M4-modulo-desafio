@@ -60,7 +60,10 @@ function livro(menthod) {
               'O nome do autor precisa ser String e não pode estar vazio',
           },
         }),
-        body('livroId', 'ID do livro é obrigatório')
+        body(
+          'livroId',
+          'ID do livro é obrigatório e, necessita ser um número inteiro'
+        )
           .exists()
           .notEmpty()
           .trim()
@@ -71,6 +74,95 @@ function livro(menthod) {
           .trim()
           .isDecimal(),
         body('estoque', 'O estoque do livro é obrigatório')
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+      ];
+    }
+    case 'createUpdateInfo': {
+      return [
+        body(
+          'livroId',
+          'ID do livro é obrigatório e, necessita ser um número inteiro'
+        )
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+        body('descricao', 'A descrição é obrigatória')
+          .exists()
+          .notEmpty()
+          .isString()
+          .trim(),
+        body(
+          'paginas',
+          'A quantidade de páginas é obrigatórias e, necessita ser um número inteiro'
+        )
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+        body('editora', 'A editora é obrigatória')
+          .exists()
+          .notEmpty()
+          .isString()
+          .trim(),
+      ];
+    }
+    case 'createAvaliacao': {
+      return [
+        param(
+          'livroId',
+          'ID do livro é obrigatório e, necessita ser um número inteiro'
+        )
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+        body('nome', 'Nome é um valor obrigatório')
+          .exists()
+          .notEmpty()
+          .trim()
+          .isString(),
+        body('nota', 'Nota tem que ser número e inteiro')
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+        body('avaliacao', 'Avaliação é um valor obrigatório')
+          .exists()
+          .notEmpty()
+          .trim()
+          .isString(),
+      ];
+    }
+    case 'deleteInfo': {
+      return [
+        param(
+          'livroId',
+          'ID do livro é obrigatório e, necessita ser um número inteiro'
+        )
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+      ];
+    }
+    case 'deleteAvaliacao': {
+      return [
+        param(
+          'livroId',
+          'ID do livro é obrigatório e, necessita ser um número inteiro'
+        )
+          .exists()
+          .notEmpty()
+          .trim()
+          .isInt(),
+        param(
+          'index',
+          'O index da avaliação é obrigatório e, necessita ser um número inteiro'
+        )
           .exists()
           .notEmpty()
           .trim()
