@@ -1,4 +1,5 @@
 const clienteRepository = require('../repositories/cliente.respository');
+const vendaRepository = require('../repositories/venda.repository');
 
 async function getClientes() {
   return await clienteRepository.getClientes();
@@ -17,7 +18,12 @@ async function updateCliente(cliente) {
 }
 
 async function deleteCliente(id) {
-  // TODO: validar se tem ou não vendas para esse cliente. se tiver não é possível excluir
+  const del = await vendaRepository.getVendaCliente(id);
+  if (del.length > 0) {
+    throw new Error(
+      'Existe venda para esse cliente. Não é possível realizar sua exclusão'
+    );
+  }
   await clienteRepository.deleteCliente(id);
 }
 

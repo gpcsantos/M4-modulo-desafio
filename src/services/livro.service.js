@@ -1,4 +1,5 @@
 const livroRepository = require('../repositories/livro.repository');
+const vendaRepository = require('../repositories/venda.repository');
 
 async function getLivros() {
   return await livroRepository.getLivros();
@@ -7,6 +8,9 @@ async function getLivros() {
 async function getLivro(id) {
   // TODO: retornar as informações do PostgreSQL e do MongoDB
   return await livroRepository.getLivro(id);
+}
+async function getLivroByAutor(id) {
+  return await livroRepository.getLivroByAutor(id);
 }
 
 async function createLivro(livro) {
@@ -18,13 +22,19 @@ async function updateLivro(livro) {
 }
 
 async function deleteLivro(id) {
-  // TODO: antes de excluir um livro, verificar se existem vendas realizadas para ele. Caso exista, bloquear a exclusão
+  const del = await vendaRepository.getVendaLivro(id);
+  if (del.length > 0) {
+    throw new Error(
+      'Existe vendas para o livro informado. Não é possível realizar sua exclusão.'
+    );
+  }
   await livroRepository.deleteLivro(id);
 }
 
 module.exports = {
   getLivros,
   getLivro,
+  getLivroByAutor,
   createLivro,
   updateLivro,
   deleteLivro,

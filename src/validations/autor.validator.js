@@ -15,8 +15,8 @@ function autor(menthod) {
         body('email', 'O email do autor é obrigatório')
           .exists()
           .notEmpty()
-          .trim()
-          .isEmail(),
+          .trim(),
+        body('email', 'Formato do e-email é inválido').isEmail(),
         body('telefone', 'O telefone do autor é obrigatório')
           .exists()
           .notEmpty()
@@ -39,8 +39,8 @@ function autor(menthod) {
         body('email', 'O email do autor é obrigatório')
           .exists()
           .notEmpty()
-          .trim()
-          .isEmail(),
+          .trim(),
+        body('email', 'Formato do e-email é inválido').isEmail(),
         body('telefone', 'O telefone do autor é obrigatório')
           .exists()
           .notEmpty()

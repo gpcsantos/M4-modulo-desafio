@@ -1,4 +1,5 @@
 const autorRepository = require('../repositories/autor.repository');
+const livroRepository = require('../repositories/livro.repository');
 
 async function getAutores() {
   return await autorRepository.getAutores();
@@ -17,7 +18,14 @@ async function updateAutor(autor) {
 }
 
 async function deleteAutor(id) {
-  // TODO: verificar se existem livros cadastrados para ele. Caso exista, bloquear a exclusão
+  // Verificação pode ser feita pelo banco de dados caso haja constraint, tratamento do erro está no repository
+  // Consulta é valida quando não há constriant no banco de dados
+  const del = await livroRepository.getLivroByAutor(id);
+  if (del.length > 0) {
+    throw new Error(
+      'Não é possível exluir Autor, pois existem livros atribuidos à ele. Primeiro exclua todos os livros do autor'
+    );
+  }
   await autorRepository.deleteAutor(id);
 }
 

@@ -2,8 +2,19 @@ const livroService = require('../services/livro.service');
 const { validationResult } = require('express-validator');
 
 async function getLivros(req, res, next) {
+  const erros = validationResult(req);
+  if (!erros.isEmpty()) {
+    return res.status(400).json({ erro: erros.array() });
+  }
+
+  let response = [];
   try {
-    return res.send(await livroService.getLivros());
+    if (Object.keys(req.query).length === 0) {
+      response = await livroService.getLivros();
+    } else {
+      response = await livroService.getLivroByAutor(req.query.autorId);
+    }
+    return res.send(response);
   } catch (error) {
     next(error);
   }
@@ -41,7 +52,11 @@ async function updateLivro(req, res, next) {
     return res.status(400).json({ erro: erros.mapped() });
   }
   try {
-    const livro = req.body;
+    const livro = {
+      livroId: req.body.livroId,
+      valor: req.body.valor,
+      estoque: req.body.estoque,
+    };
     return res.send(await livroService.updateLivro(livro));
   } catch (error) {
     next(error);

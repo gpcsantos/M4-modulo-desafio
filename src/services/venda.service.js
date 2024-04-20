@@ -49,9 +49,17 @@ async function updateVenda(venda) {
   return await vendaRepository.updateVenda(venda);
 }
 
-async function deleteVenda(id) {
-  // TODO: validar se tem ou não vendas para esse venda. se tiver não é possível excluir
-  await vendaRepository.deleteVenda(id);
+async function deleteVenda(vendaId, livroId) {
+  const venda = await vendaRepository.getVendaByVendaLivro(vendaId, livroId);
+
+  if (venda.length === 0) {
+    throw new Error('Venda não encontrada');
+  }
+  const livro = await livroRepository.getLivro(livroId);
+  livro.estoque++;
+
+  await livroRepository.updateLivro(livro);
+  await vendaRepository.deleteVenda(vendaId);
 }
 
 module.exports = {

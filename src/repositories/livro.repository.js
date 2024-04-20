@@ -15,6 +15,14 @@ async function getLivro(id) {
   }
 }
 
+async function getLivroByAutor(autorId) {
+  try {
+    return await livros.findAll({ where: { autorId }, raw: true });
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function createLivro(livro) {
   try {
     return await livros.create(livro);
@@ -24,7 +32,6 @@ async function createLivro(livro) {
 }
 
 async function updateLivro(livro) {
-  //TODO: O endpoint não deve permitir que o nome e autor do livro sejam alterados, evitando assim possíveis inconsistências
   try {
     await livros.update(livro, {
       where: {
@@ -50,6 +57,7 @@ async function deleteLivro(id) {
 module.exports = {
   getLivros,
   getLivro,
+  getLivroByAutor,
   createLivro,
   updateLivro,
   deleteLivro,

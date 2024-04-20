@@ -17,7 +17,7 @@ async function getVenda(id) {
 }
 async function getVendaCliente(clienteId) {
   try {
-    return await vendas.findAll({ where: { clienteId } });
+    return await vendas.findAll({ where: { clienteId }, raw: true });
   } catch (error) {
     throw error;
   }
@@ -41,6 +41,13 @@ async function getVendaAutor(autorId) {
   }
 }
 
+async function getVendaByVendaLivro(vendaId, livroId) {
+  try {
+    return await vendas.findAll({ where: { vendaId, livroId } });
+  } catch (error) {
+    throw error;
+  }
+}
 async function createVenda(venda) {
   try {
     return await vendas.create(venda);
@@ -78,6 +85,7 @@ module.exports = {
   getVendaCliente,
   getVendaLivro,
   getVendaAutor,
+  getVendaByVendaLivro,
   createVenda,
   updateVenda,
   deleteVenda,

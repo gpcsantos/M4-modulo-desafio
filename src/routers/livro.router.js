@@ -4,7 +4,7 @@ const livroValidator = require('../validations/livro.validator');
 
 const router = express.Router();
 
-router.get('/', livroController.getLivros);
+router.get('/', livroValidator.livro('get'), livroController.getLivros);
 // TODO:  http://localhost:3000/livro?autorId={autorId}
 // TODO: POST http://localhost:3000/livro/info MONGO DB
 // TODO: PUT http://localhost:3000/livro/info MONGO DB

@@ -43,6 +43,18 @@ function venda(menthod) {
           .isInt(),
       ];
     }
+    case 'delete': {
+      return [
+        param('vendaId', 'ID da venda é obrigatório')
+          .exists()
+          .notEmpty()
+          .isInt(),
+        param('livroId', 'o ID do livro é obrigatório')
+          .exists()
+          .notEmpty()
+          .isInt(),
+      ];
+    }
   }
 }
 

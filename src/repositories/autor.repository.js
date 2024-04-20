@@ -24,7 +24,6 @@ async function createAutor(autor) {
 }
 
 async function updateAutor(autor) {
-  // TODO: O endpoint não deve permitir que o nome e autor do livro sejam alterados, evitando assim possíveis inconsistências
   try {
     await autors.update(autor, {
       where: {
@@ -43,6 +42,11 @@ async function deleteAutor(id) {
       where: { autorId: id },
     });
   } catch (error) {
+    if (error.name === 'SequelizeForeignKeyConstraintError') {
+      throw new Error(
+        'Não é possível exluir Autor, pois existem livros atribuidos à ele. Primeiro exclua todos os livros do autor'
+      );
+    }
     throw error;
   }
 }

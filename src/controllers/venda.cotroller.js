@@ -6,19 +6,19 @@ async function getVendas(req, res, next) {
   if (!erros.isEmpty()) {
     return res.status(400).json({ erro: erros.array() });
   }
-  const response = [];
+  let response = [];
   try {
     if (Object.keys(req.query).length === 0) {
-      response.push(await vendaService.getVendas());
+      response = await vendaService.getVendas();
     } else {
       if (req.query.clienteId) {
-        response.push(await vendaService.getVendaCliente(req.query.clienteId));
+        response = await vendaService.getVendaCliente(req.query.clienteId);
       }
       if (req.query.livroId) {
-        response.push(await vendaService.getVendaLivro(req.query.livroId));
+        response = await vendaService.getVendaLivro(req.query.livroId);
       }
       if (req.query.autorId) {
-        response.push(await vendaService.getVendaAutor(req.query.autorId));
+        response = await vendaService.getVendaAutor(req.query.autorId);
       }
     }
     return res.send(response);
@@ -71,9 +71,11 @@ async function deleteVenda(req, res, next) {
   if (!erros.isEmpty()) {
     return res.status(400).json({ erro: erros.array() });
   }
+
   try {
-    const id = req.params.id;
-    return res.send(await vendaService.deleteVenda(id));
+    return res.send(
+      await vendaService.deleteVenda(req.params.vendaId, req.params.livroId)
+    );
   } catch (error) {
     next(error);
   }
