@@ -1,5 +1,6 @@
 const livroRepository = require('../repositories/livro.repository');
 const vendaRepository = require('../repositories/venda.repository');
+const autorRepository = require('../repositories/autor.repository');
 const livroInfoRepository = require('../repositories/livroInfo.repository');
 
 async function getLivros() {
@@ -17,7 +18,11 @@ async function getLivroByAutor(id) {
 }
 
 async function createLivro(livro) {
-  //TODO : não cadastrar livro de autor que não exista
+  const query = await autorRepository.getAutor(livro.autorId);
+  if (!query) {
+    throw new Error('Autor informado não existe');
+  }
+
   return await livroRepository.createLivro(livro);
 }
 
