@@ -1,4 +1,5 @@
 const livroService = require('../services/livro.service');
+
 const { validationResult } = require('express-validator');
 
 async function getLivros(req, res, next) {
@@ -46,6 +47,36 @@ async function createLivro(req, res, next) {
   }
 }
 
+async function createLivroInfo(req, res, next) {
+  try {
+    let livroInfo = req.body;
+
+    if (!livroInfo.livroId) {
+      throw new Error('Livro ID é obrigatório');
+    }
+
+    await livroService.createLivroInfo(livroInfo);
+    res.end();
+    // logger.info(`POST - /product/info - ${JSON.stringify(livroInfo)}`);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function createAvaliacao(req, res, next) {
+  try {
+    const livroId = req.params.livroId;
+    const avaliacao = req.body;
+    if (!req.params.livroId) {
+      throw new Error('Livro ID é obrigatório');
+    }
+
+    res.send(await livroService.createAvaliacao(avaliacao, livroId));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function updateLivro(req, res, next) {
   const erros = validationResult(req);
   if (!erros.isEmpty()) {
@@ -58,6 +89,26 @@ async function updateLivro(req, res, next) {
       estoque: req.body.estoque,
     };
     return res.send(await livroService.updateLivro(livro));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updateLivroInfo(req, res, next) {
+  try {
+    let livroInfo = {
+      livroId: req.body.livroId,
+      descricao: req.body.descricao,
+      paginas: req.body.paginas,
+      editora: req.body.editora,
+    };
+
+    if (!livroInfo.livroId) {
+      throw new Error('Product ID é obrigatório');
+    }
+
+    await livroService.updateLivroInfo(livroInfo);
+    res.end();
   } catch (error) {
     next(error);
   }
@@ -76,10 +127,46 @@ async function deleteLivro(req, res, next) {
   }
 }
 
+async function deleteLivroInfo(req, res, next) {
+  try {
+    let livroId = req.params.livroId;
+
+    if (!req.params.livroId) {
+      throw new Error('Livro ID é obrigatório');
+    }
+
+    await livroService.deleteLivroInfo(parseInt(livroId));
+    res.end();
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function deleteAvaliacao(req, res, next) {
+  try {
+    let livroId = req.params.livroId;
+    let index = req.params.index;
+
+    if (!req.params.livroId && !req.params.index) {
+      throw new Error('Livro ID e INDEX são obrigatório');
+    }
+
+    await livroService.deleteAvaliacao(parseInt(livroId), index);
+    res.end();
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getLivros,
   getLivro,
   createLivro,
+  createLivroInfo,
+  createAvaliacao,
   updateLivro,
+  updateLivroInfo,
   deleteLivro,
+  deleteLivroInfo,
+  deleteAvaliacao,
 };

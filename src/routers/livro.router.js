@@ -5,14 +5,14 @@ const livroValidator = require('../validations/livro.validator');
 const router = express.Router();
 
 router.get('/', livroValidator.livro('get'), livroController.getLivros);
-// TODO: POST http://localhost:3000/livro/info MONGO DB
-// TODO: PUT http://localhost:3000/livro/info MONGO DB
-// TODO: DELETE http://localhost:3000/livro/info/{livroId} MONGO DB
-// TODO: POST http://localhost:3000/livro/{livroId}/avaliacao MONGO DB
-// TODO: DELETE http://localhost:3000/livro/{livroId}/avaliacao/{index} MONGO DB
 router.get('/:id', livroValidator.livro('id'), livroController.getLivro);
 router.post('/', livroValidator.livro('create'), livroController.createLivro);
+router.post('/info', livroController.createLivroInfo); // TODO: fazer validations
+router.post('/:livroId/avaliacao', livroController.createAvaliacao); // TODO: fazer validations
 router.put('/', livroValidator.livro('update'), livroController.updateLivro);
+router.put('/info', livroController.updateLivroInfo); // TODO: fazer validations
 router.delete('/:id', livroValidator.livro('id'), livroController.deleteLivro);
+router.delete('/info/:livroId', livroController.deleteLivroInfo); // TODO: fazer validations
+router.delete('/:livroId/avaliacao/:index', livroController.deleteAvaliacao); // TODO: fazer validations
 
 module.exports = router;
