@@ -24,6 +24,7 @@ async function createAutor(autor) {
 }
 
 async function updateAutor(autor) {
+  // TODO: O endpoint não deve permitir que o nome e autor do livro sejam alterados, evitando assim possíveis inconsistências
   try {
     await autors.update(autor, {
       where: {

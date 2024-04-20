@@ -1,7 +1,31 @@
-const { param, body } = require('express-validator');
+const { param, body, checkSchema } = require('express-validator');
 
 function venda(menthod) {
   switch (menthod) {
+    case 'get': {
+      return [
+        checkSchema({
+          clienteId: {
+            in: 'query',
+            isInt: true,
+            optional: true,
+            errorMessage: 'ID precisa ser número inteiro',
+          },
+          livroId: {
+            in: 'query',
+            isInt: true,
+            optional: true,
+            errorMessage: 'ID precisa ser número inteiro',
+          },
+          autorId: {
+            in: 'query',
+            isInt: true,
+            optional: true,
+            errorMessage: 'ID precisa ser número inteiro',
+          },
+        }),
+      ];
+    }
     case 'id': {
       return [param('id', 'ID tem que ser número inteiro').isInt()];
     }

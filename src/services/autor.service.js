@@ -17,6 +17,7 @@ async function updateAutor(autor) {
 }
 
 async function deleteAutor(id) {
+  // TODO: verificar se existem livros cadastrados para ele. Caso exista, bloquear a exclusão
   await autorRepository.deleteAutor(id);
 }
 

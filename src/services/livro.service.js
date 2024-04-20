@@ -5,6 +5,7 @@ async function getLivros() {
 }
 
 async function getLivro(id) {
+  // TODO: retornar as informações do PostgreSQL e do MongoDB
   return await livroRepository.getLivro(id);
 }
 
@@ -17,6 +18,7 @@ async function updateLivro(livro) {
 }
 
 async function deleteLivro(id) {
+  // TODO: antes de excluir um livro, verificar se existem vendas realizadas para ele. Caso exista, bloquear a exclusão
   await livroRepository.deleteLivro(id);
 }
 

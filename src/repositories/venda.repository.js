@@ -1,4 +1,5 @@
 const vendas = require('../models/venda.model');
+const livros = require('../models/livro.model');
 
 async function getVendas() {
   try {
@@ -10,6 +11,31 @@ async function getVendas() {
 async function getVenda(id) {
   try {
     return await vendas.findByPk(id);
+  } catch (error) {
+    throw error;
+  }
+}
+async function getVendaCliente(clienteId) {
+  try {
+    return await vendas.findAll({ where: { clienteId } });
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getVendaLivro(livroId) {
+  try {
+    return await vendas.findAll({ where: { livroId } });
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getVendaAutor(autorId) {
+  try {
+    return await vendas.findAll({
+      include: { model: livros, where: { autorId } },
+    });
   } catch (error) {
     throw error;
   }
@@ -49,6 +75,9 @@ async function deleteVenda(id) {
 module.exports = {
   getVendas,
   getVenda,
+  getVendaCliente,
+  getVendaLivro,
+  getVendaAutor,
   createVenda,
   updateVenda,
   deleteVenda,
