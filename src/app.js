@@ -15,4 +15,9 @@ app.use('/vendas', vendaRouter);
 app.use('/livros', livroRouter);
 app.use('/autores', autorRouter);
 
+app.use((err, req, res, next) => {
+  // global.logger.error(`${req.method} ${req.baseUrl} - ${err.message}`);
+  res.status(400).send({ error: err.message });
+});
+
 module.exports = app;

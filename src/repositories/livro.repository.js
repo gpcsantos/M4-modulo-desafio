@@ -9,7 +9,7 @@ async function getLivros() {
 }
 async function getLivro(id) {
   try {
-    return await livros.findByPk(id);
+    return await livros.findByPk(id, { raw: true });
   } catch (error) {
     throw error;
   }

@@ -1,4 +1,6 @@
 const vendaRepository = require('../repositories/venda.repository');
+const livroRepository = require('../repositories/livro.repository');
+const clienteRepository = require('../repositories/cliente.respository');
 
 async function getVendas() {
   return await vendaRepository.getVendas();
@@ -21,8 +23,25 @@ async function getVendaAutor(autorId) {
 }
 
 async function createVenda(venda) {
-  // TODO: antes de cadastrar a venda é necessário verificar se o livro tem estoque maior que zero Se não tiver estoque, um erro deve ser retornado ao usuário informando o que ocorreu
-  // TODO: O valor da venda neste endpoint é  buscada da tabela do livro e inserida no registro da venda
+  const error = [];
+  if (!(await clienteRepository.getCliente(venda.clienteId))) {
+    error.push('Cliente não encontrado');
+  }
+  const livro = await livroRepository.getLivro(venda.livroId);
+  if (!livro) {
+    error.push('Livro não encontrado');
+  }
+  if (error.length > 0) {
+    throw new Error(error);
+  }
+  if (livro.estoque === 0) {
+    throw new Error('Estoque insuficiente');
+  }
+
+  venda.valor = livro.valor;
+  livro.estoque--;
+
+  await livroRepository.updateLivro(livro);
   return await vendaRepository.createVenda(venda);
 }
 
