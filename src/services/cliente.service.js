@@ -1,6 +1,12 @@
 const clienteRepository = require('../repositories/cliente.respository');
 const vendaRepository = require('../repositories/venda.repository');
 
+async function getLogin(username, password) {
+  return await clienteRepository.getLogin(username, password);
+}
+async function getClienteByEmail(username) {
+  return await clienteRepository.getClienteByEmail(username);
+}
 async function getClientes() {
   return await clienteRepository.getClientes();
 }
@@ -28,6 +34,8 @@ async function deleteCliente(id) {
 }
 
 module.exports = {
+  getLogin,
+  getClienteByEmail,
   getClientes,
   getCliente,
   createCliente,

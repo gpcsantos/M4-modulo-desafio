@@ -1,5 +1,25 @@
 const clientes = require('../models/cliente.model');
 
+async function getLogin(username, password) {
+  try {
+    return await clientes.findOne({
+      where: { email: username, senha: password },
+      raw: true,
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+async function getClienteByEmail(username) {
+  try {
+    return await clientes.findOne({
+      where: { email: username },
+      raw: true,
+    });
+  } catch (error) {
+    throw error;
+  }
+}
 async function getClientes() {
   try {
     return await clientes.findAll({
@@ -51,6 +71,8 @@ async function deleteCliente(id) {
 }
 
 module.exports = {
+  getLogin,
+  getClienteByEmail,
   getClientes,
   getCliente,
   createCliente,
