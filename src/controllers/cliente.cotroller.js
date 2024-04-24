@@ -37,11 +37,20 @@ async function createCliente(req, res, next) {
 
 async function updateCliente(req, res, next) {
   const erros = validationResult(req);
+  const { userId, role } = req.userId;
+  console.log(userId, role);
+
   if (!erros.isEmpty()) {
     return res.status(400).json({ erro: erros.mapped() });
   }
   try {
     const cliente = req.body;
+    console.log(cliente.clienteId);
+    if (role !== 'admin') {
+      if (userId != cliente.clienteId) {
+        return res.status(401).json({ erro: 'Não permitido' });
+      }
+    }
     return res.send(await clienteService.updateCliente(cliente));
   } catch (error) {
     next(error);
